@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+#imgid{
+    width: 200px;
+    height: 300px;
+    margin-left: 700px;
+    transform: translate(-10px,-370px);
+
+}
+.from1{
+    width: 200px;
+    height:200px;
+    border: 3px solid black;
+    margin-top: 100px;
+}
+.sbtn{
+    background-color: rgb(65, 135, 240);
+    padding: 10px;
+    font-size: 22px;;
+}
+    </style>
+    <title>AIAPP</title>
+</head>
+<body>
+   <h2>Object Detection</h2>
+    <div class="form1">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+        <label>Select Image file:</label>{{form.img}}<br><br>
+        <label>Select XML file:</label>{{form.xml}}<br><br>
+        <input type="submit" value="Post" onclick="getsrc()" class="sbtn">
+        </form>
+    </div>
+    <br><br>
+    <div>
+        <h2>Report</h2>
+        <form action="{% url 'report' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>Start date:</label><input type="date" name="start_date" placeholder="yyyy/mm/dd"><br><br>
+            <label>End date:</label> <input type="date" name="end_date" placeholder="yyyy/mm/dd"> <br><br>
+        <input type="submit" value="Report" class="sbtn">
+        </form>
+    </div>
+    <div id="imgid" >
+        
+    </div>
+
+    <script>
+      const url_api="http://127.0.0.1:8000/filedata/";
+    async function getsrc(){
+        const response= await fetch(url_api);
+        const data=await response.json();
+        console.log(data.img);
+        var img = document.createElement('img'); 
+            img.src = data.img;
+            document.getElementById('imgid').appendChild(img); 
+            down.innerHTML = "Image Element Added.";  
+    }
+    getsrc();
+    </script>
+
+</body>
+</html>
